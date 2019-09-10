@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import LoginForm from './components/LoginForm'
+import BlogForm from './components/BlogForm'
 import Blogs from './components/Blogs'
 
 import loginService from './services/login'
@@ -25,6 +26,7 @@ const App = () => {
     if (userJSON) {
       const user = JSON.parse(userJSON)
       setUser(user)
+      blogsService.setToken(user.token)
       console.log('user session restored')
     }
   }, [])
@@ -35,6 +37,7 @@ const App = () => {
     try {
       const user = await loginService.login({username, password})
       setUser(user)
+      blogsService.setToken(user.token)
       setUsername('')
       setPassword('')
       console.log('success!')
@@ -42,6 +45,12 @@ const App = () => {
     } catch(e) {
       console.error('error', e)
     }
+  }
+
+  const createBlog = (blog) => {
+    blogsService.create(blog).then( (newBlog) => {
+      setBlogs(blogs.concat(newBlog))
+    })
   }
 
   const handleNewUsernameChange = ({target}) => {
@@ -69,6 +78,11 @@ const App = () => {
       <Blogs
         blogs={blogs}
       />
+
+      <BlogForm
+        onSubmit={createBlog}
+      />
+
     </div>
   )
 
