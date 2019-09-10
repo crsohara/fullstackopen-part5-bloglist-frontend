@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Blogs from './components/Blogs'
+import Notification from './components/Notification'
 
 import loginService from './services/login'
 import blogsService from './services/blogs'
@@ -14,6 +15,10 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [blogs, setBlogs] = useState([])
+  const [notification, setNotification] = useState({
+    message: null,
+    type: null
+  })
 
   useEffect(() => {
     blogsService.getAll().then( (initialBlogs) => {
@@ -27,30 +32,42 @@ const App = () => {
       const user = JSON.parse(userJSON)
       setUser(user)
       blogsService.setToken(user.token)
-      console.log('user session restored')
+      triggerNotification(`Login success for ${user.username}`, 'success')
     }
   }, [])
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    console.log('logging in', username, password)
+
     try {
       const user = await loginService.login({username, password})
       setUser(user)
       blogsService.setToken(user.token)
       setUsername('')
       setPassword('')
-      console.log('success!')
+      triggerNotification(`Login success for ${user.username}`, 'success')
       window.localStorage.setItem( LOCALSTORAGE_APP_USER, JSON.stringify(user));
-    } catch(e) {
-      console.error('error', e)
+    } catch(error) {
+      triggerNotification(`${error.response.data.error}`, 'error')
     }
   }
 
+  const triggerNotification = (message, type) => {
+    setNotification({message, type})
+    setTimeout(() => {setNotification({ message: null, type: null })}, 5000)
+  }
+
   const createBlog = (blog) => {
-    blogsService.create(blog).then( (newBlog) => {
-      setBlogs(blogs.concat(newBlog))
-    })
+    blogsService.create(blog)
+      .then( (newBlog) => {
+        setBlogs(blogs.concat(newBlog))
+        triggerNotification(`new blog ${newBlog.title} added!`, 'success')
+      })
+      .catch(error => {
+        console.log(error);
+
+        triggerNotification(`${error}`, 'error')
+      })
   }
 
   const handleNewUsernameChange = ({target}) => {
@@ -64,6 +81,7 @@ const App = () => {
   const handleLogout = () => {
     window.localStorage.removeItem(LOCALSTORAGE_APP_USER)
     setUser(null)
+    triggerNotification('User logged out!', 'success')
   }
 
   const showLoggedInView = () => (
@@ -103,6 +121,9 @@ const App = () => {
   return (
     <div>
 
+      <Notification
+        notification={notification}
+      />
 
       { user === null ?
         showLoggedOutView() :
