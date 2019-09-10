@@ -8,7 +8,7 @@ import blogsService from './services/blogs'
 
 
 const App = () => {
-
+  const LOCALSTORAGE_APP_USER = 'loggedBloglistAppUser'
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -21,7 +21,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    const userJSON = window.localStorage.getItem('loggedBloglistAppUser');
+    const userJSON = window.localStorage.getItem(LOCALSTORAGE_APP_USER);
     if (userJSON) {
       const user = JSON.parse(userJSON)
       setUser(user)
@@ -38,7 +38,7 @@ const App = () => {
       setUsername('')
       setPassword('')
       console.log('success!')
-      window.localStorage.setItem( 'loggedBloglistAppUser', JSON.stringify(user));
+      window.localStorage.setItem( LOCALSTORAGE_APP_USER, JSON.stringify(user));
     } catch(e) {
       console.error('error', e)
     }
@@ -52,10 +52,20 @@ const App = () => {
     setPassword(target.value)
   }
 
+  const handleLogout = () => {
+    window.localStorage.removeItem(LOCALSTORAGE_APP_USER)
+    setUser(null)
+  }
+
   const showLoggedInView = () => (
     <div>
       <h1>Blogs</h1>
-      <p>{user.name} logged in </p>
+      <p>
+        <span>{user.name} logged in </span>
+        <button onClick={handleLogout}>Logout</button>
+      </p>
+
+
       <Blogs
         blogs={blogs}
       />
