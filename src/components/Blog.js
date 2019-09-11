@@ -1,8 +1,42 @@
-import React from 'react'
-const Blog = ({ blog }) => (
-  <div>
-    {blog.title} {blog.author}
-  </div>
-)
+import React, {useState} from 'react'
+
+
+const Blog = ({ blog }) => {
+  const [visible, setVisible] = useState(false)
+
+  const blogStyle = {
+    border: 'solid',
+    borderWidth: 1,
+    marginBottom: 5,
+    paddingTop: 10,
+    paddingLeft: 2
+  }
+
+  const toggleVisiblity = () => {
+    setVisible(!visible)
+  }
+
+  const showMore = {display: visible ? '' : 'none'}
+
+  const handleLike = () => {
+    console.log('todo')
+  }
+
+  return (
+    <div style={blogStyle}>
+
+      <div onClick={toggleVisiblity}>
+        {blog.title} {blog.author}
+      </div>
+
+      <div style={showMore}>
+        <p><a href={blog.url}>{blog.url}</a></p>
+        <p>{blog.likes} like{blog.likes === 1 ? '' : 's'} <button onClick={handleLike}>Like!</button></p>
+        <p>Added by {blog.user.name}</p>
+      </div>
+
+    </div>
+  )
+}
 
 export default Blog
