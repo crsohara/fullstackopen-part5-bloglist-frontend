@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import Blog from './Blog'
 
@@ -16,5 +17,12 @@ const Blogs = ({blogs, handleLike, handleDelete, user}) => (
       />
     ))
 )
+
+Blogs.propTypes = {
+  blogs: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
+  handleLike: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+}
 
 export default Blogs
