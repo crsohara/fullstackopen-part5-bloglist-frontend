@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
@@ -35,7 +35,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    const userJSON = window.localStorage.getItem(LOCALSTORAGE_APP_USER);
+    const userJSON = window.localStorage.getItem(LOCALSTORAGE_APP_USER)
     if (userJSON) {
       const user = JSON.parse(userJSON)
       setUser(user)
@@ -48,20 +48,20 @@ const App = () => {
     event.preventDefault()
 
     try {
-      const user = await loginService.login({username, password})
+      const user = await loginService.login({ username, password })
       setUser(user)
       blogsService.setToken(user.token)
       setUsername('')
       setPassword('')
       triggerNotification(`Login success for ${user.username}`, 'success')
-      window.localStorage.setItem( LOCALSTORAGE_APP_USER, JSON.stringify(user));
+      window.localStorage.setItem( LOCALSTORAGE_APP_USER, JSON.stringify(user))
     } catch(error) {
       triggerNotification(`${error.response.data}`, 'error')
     }
   }
 
   const triggerNotification = (message, type) => {
-    setNotification({message, type})
+    setNotification({ message, type })
     setTimeout(() => {setNotification({ message: null, type: null })}, 5000)
   }
 
@@ -75,11 +75,11 @@ const App = () => {
     }
   }
 
-  const handleNewUsernameChange = ({target}) => {
+  const handleNewUsernameChange = ({ target }) => {
     setUsername(target.value)
   }
 
-  const handleNewpasswordChange = ({target}) => {
+  const handleNewpasswordChange = ({ target }) => {
     setPassword(target.value)
   }
 
@@ -175,4 +175,4 @@ const App = () => {
   )
 }
 
-export default App;
+export default App

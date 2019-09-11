@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Blog from './Blog'
 
-const Blogs = ({blogs, handleLike, handleDelete, user}) => (
+const Blogs = ({ blogs, handleLike, handleDelete, user }) => (
 
   blogs
     .sort( (a, b) => b.likes - a.likes )

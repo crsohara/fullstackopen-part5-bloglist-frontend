@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 const Blog = ({ blog, handleLike, handleDelete, user }) => {
@@ -16,7 +16,7 @@ const Blog = ({ blog, handleLike, handleDelete, user }) => {
     setVisible(!visible)
   }
 
-  const showMore = {display: visible ? '' : 'none'}
+  const showMore = { display: visible ? '' : 'none' }
   const removeButton = blog.user.username === user.username && (<button onClick={handleDelete}>Remove</button>)
 
   return (

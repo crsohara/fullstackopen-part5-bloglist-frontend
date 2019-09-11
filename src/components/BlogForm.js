@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 const BlogForm = ({
@@ -9,27 +9,27 @@ const BlogForm = ({
   const [ author, setAuthor ] = useState('')
   const [ url, setUrl ] = useState('')
 
-  const handleTitleChange = ({target}) => {
+  const handleTitleChange = ({ target }) => {
     setTitle(target.value)
   }
 
-  const handleAuthoChange = ({target}) => {
+  const handleAuthoChange = ({ target }) => {
     setAuthor(target.value)
   }
 
-  const handleUrlChange = ({target}) => {
+  const handleUrlChange = ({ target }) => {
     setUrl(target.value)
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    onSubmit({title, author, url})
+    onSubmit({ title, author, url })
   }
 
   return (
     <form onSubmit={handleSubmit}>
 
-    	<div>
+      <div>
 
         Title:
         <input
