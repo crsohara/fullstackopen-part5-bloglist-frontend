@@ -67,8 +67,8 @@ const App = () => {
 
   const createBlog = async (blog) => {
     try {
-      const response = await blogsService.create(blog)
-      setBlogs(blogs.concat(blog))
+      const newBlog = await blogsService.create(blog)
+      setBlogs(blogs.concat(newBlog))
       triggerNotification(`new blog ${blog.title} added!`, 'success')
     } catch(error) {
       triggerNotification(`${error}`, 'error')
