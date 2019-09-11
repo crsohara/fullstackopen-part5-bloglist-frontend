@@ -20,13 +20,13 @@ const Blog = ({ blog, handleLike, handleDelete, user }) => {
   const removeButton = blog.user.username === user.username && (<button onClick={handleDelete}>Remove</button>)
 
   return (
-    <div style={blogStyle}>
+    <div className='blog' style={blogStyle}>
 
-      <div onClick={toggleVisiblity}>
+      <div className='blog__name' onClick={toggleVisiblity}>
         {blog.title} {blog.author}
       </div>
 
-      <div style={showMore}>
+      <div className='blog__info' style={showMore}>
         <p><a href={blog.url}>{blog.url}</a></p>
         <p>{blog.likes} like{blog.likes === 1 ? '' : 's'} <button onClick={handleLike}>Like!</button></p>
         <p>Added by {blog.user.name}</p>
