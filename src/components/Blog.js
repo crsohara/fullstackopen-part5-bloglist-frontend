@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 
-
-const Blog = ({ blog }) => {
+const Blog = ({ blog, handleLike }) => {
   const [visible, setVisible] = useState(false)
 
   const blogStyle = {
@@ -17,10 +16,6 @@ const Blog = ({ blog }) => {
   }
 
   const showMore = {display: visible ? '' : 'none'}
-
-  const handleLike = () => {
-    console.log('todo')
-  }
 
   return (
     <div style={blogStyle}>

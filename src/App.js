@@ -83,6 +83,23 @@ const App = () => {
     setPassword(target.value)
   }
 
+  const handleLike = async (id) => {
+    const blog = blogs.find( (blog) => blog.id === id )
+    const updatedBlog = {
+      ...blog,
+      likes: blog.likes += 1,
+      user: blog.user.id
+    }
+
+    try {
+      const response = await blogsService.update(id, updatedBlog)
+      setBlogs(blogs.map( blog => blog.id !== id ? blog : response))
+      triggerNotification(`Blog '${blog.title}' liked!`, 'success')
+    } catch(error) {
+      triggerNotification(`${error}`, 'error')
+    }
+  }
+
   const handleLogout = () => {
     window.localStorage.removeItem(LOCALSTORAGE_APP_USER)
     setUser(null)
@@ -100,6 +117,7 @@ const App = () => {
 
       <Blogs
         blogs={blogs}
+        handleLike={handleLike}
       />
 
       <Togglable>

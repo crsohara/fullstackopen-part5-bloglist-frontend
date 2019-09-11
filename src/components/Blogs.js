@@ -2,11 +2,12 @@ import React from 'react'
 
 import Blog from './Blog'
 
-const Blogs = ({blogs}) => (
-  blogs.map( (blog, index) => (
+const Blogs = ({blogs, handleLike}) => (
+  blogs.map( (blog) => (
     <Blog
       blog={blog}
-      key={blog.title + index}
+      handleLike={() => handleLike(blog.id)}
+      key={blog.id}
     />
   ))
 )
