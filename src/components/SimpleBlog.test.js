@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import SimpleBlog from './SimpleBlog'
 
 describe('<SimpleBlog />', () => {
@@ -26,6 +26,27 @@ describe('<SimpleBlog />', () => {
       '27'
     )
 
+  })
+
+  test('Event is fired twice when button is pressed twice', () => {
+
+    const onClick = jest.fn()
+    const blog = {
+      title: 'Nemesis games',
+      author: 'James S.A. Corey',
+      likes: '27',
+    }
+
+    const component = render(
+      <SimpleBlog blog={blog} onClick={onClick} />
+    )
+
+    const button = component.getByText('like')
+
+    fireEvent.click(button)
+    fireEvent.click(button)
+
+    expect(onClick.mock.calls.length).toBe(2)
   })
 
 
