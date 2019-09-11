@@ -21,9 +21,16 @@ const App = () => {
   })
 
   useEffect(() => {
-    blogsService.getAll().then( (initialBlogs) => {
-      setBlogs(initialBlogs)
-    })
+    const getAllBlogs = async () => {
+      try {
+        const response = await blogsService.getAll()
+        setBlogs(response)
+
+      } catch(error) {
+        triggerNotification(error.response.data, 'error')
+      }
+    }
+    getAllBlogs()
   }, [])
 
   useEffect(() => {
@@ -48,7 +55,7 @@ const App = () => {
       triggerNotification(`Login success for ${user.username}`, 'success')
       window.localStorage.setItem( LOCALSTORAGE_APP_USER, JSON.stringify(user));
     } catch(error) {
-      triggerNotification(`${error.response.data.error}`, 'error')
+      triggerNotification(`${error.response.data}`, 'error')
     }
   }
 
@@ -57,17 +64,14 @@ const App = () => {
     setTimeout(() => {setNotification({ message: null, type: null })}, 5000)
   }
 
-  const createBlog = (blog) => {
-    blogsService.create(blog)
-      .then( (newBlog) => {
-        setBlogs(blogs.concat(newBlog))
-        triggerNotification(`new blog ${newBlog.title} added!`, 'success')
-      })
-      .catch(error => {
-        console.log(error);
-
-        triggerNotification(`${error}`, 'error')
-      })
+  const createBlog = async (blog) => {
+    try {
+      const response = await blogsService.create(blog)
+      setBlogs(blogs.concat(blog))
+      triggerNotification(`new blog ${blog.title} added!`, 'success')
+    } catch(error) {
+      triggerNotification(`${error}`, 'error')
+    }
   }
 
   const handleNewUsernameChange = ({target}) => {

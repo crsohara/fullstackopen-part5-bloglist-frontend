@@ -22,7 +22,6 @@ const BlogForm = ({
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    console.log('submitting blog')
     onSubmit({title, author, url})
   }
 
@@ -37,7 +36,7 @@ const BlogForm = ({
           name=""
           value={title}
           onChange={handleTitleChange}
-          />
+        />
 
       </div>
 
