@@ -4,6 +4,7 @@ import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Blogs from './components/Blogs'
 import Notification from './components/Notification'
+import Togglable from './components/Togglable'
 
 import loginService from './services/login'
 import blogsService from './services/blogs'
@@ -101,9 +102,11 @@ const App = () => {
         blogs={blogs}
       />
 
-      <BlogForm
-        onSubmit={createBlog}
-      />
+      <Togglable>
+        <BlogForm
+          onSubmit={createBlog}
+        />
+      </Togglable>
 
     </div>
   )
