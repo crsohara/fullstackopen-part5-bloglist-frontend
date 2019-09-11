@@ -2,7 +2,7 @@ import React from 'react'
 
 import Blog from './Blog'
 
-const Blogs = ({blogs, handleLike, handleDelete}) => (
+const Blogs = ({blogs, handleLike, handleDelete, user}) => (
 
   blogs
     .sort( (a, b) => b.likes - a.likes )
@@ -12,6 +12,7 @@ const Blogs = ({blogs, handleLike, handleDelete}) => (
         handleLike={() => handleLike(blog.id)}
         handleDelete={() => handleDelete(blog)}
         key={blog.id}
+        user={user}
       />
     ))
 )

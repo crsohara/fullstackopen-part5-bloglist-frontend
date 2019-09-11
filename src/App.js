@@ -134,6 +134,7 @@ const App = () => {
         blogs={blogs}
         handleLike={handleLike}
         handleDelete={handleDelete}
+        user={user}
       />
 
       <Togglable>
