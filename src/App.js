@@ -83,6 +83,21 @@ const App = () => {
     setPassword(target.value)
   }
 
+  const handleDelete = async (blog) => {
+    if ( !window.confirm(`Delete blog '${blog.title}' by ${blog.user.name}?`) ) {
+      return
+    }
+
+    try {
+      await blogsService.remove(blog.id)
+      const newBlogs = blogs.filter( item => item.id !== blog.id )
+      setBlogs(newBlogs)
+      triggerNotification('Blog removed!', 'success')
+    } catch(error) {
+      triggerNotification(error.toString(), 'error')
+    }
+  }
+
   const handleLike = async (id) => {
     const blog = blogs.find( (blog) => blog.id === id )
     const updatedBlog = {
@@ -118,6 +133,7 @@ const App = () => {
       <Blogs
         blogs={blogs}
         handleLike={handleLike}
+        handleDelete={handleDelete}
       />
 
       <Togglable>
